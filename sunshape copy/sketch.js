@@ -12,7 +12,7 @@ let sun;
 
 function setup() {
   createCanvas(600, 600);
-  angleMode(DEGREES);
+
   physics = new VerletPhysics2D();
 
   let bounds = new Rect(0, 0, width, height);
@@ -25,11 +25,11 @@ function setup() {
 
 function draw() {
   background(255);
-  //fill(238, 232, 44, 125);
+  fill(238, 232, 44, 125);
   //noStroke();
   physics.update();
-  sun.sunCurve();
-  sun.show();
+  // sun.sunCurve();
+  // sun.show();
   //sun.showConnections();
   
   // if (mouseIsPressed) {

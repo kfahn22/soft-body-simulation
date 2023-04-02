@@ -1,7 +1,7 @@
 class Particle extends VerletParticle2D {
     constructor(x, y) {
       super(x, y);
-      this.r = 8;
+      this.r = 4;
       physics.addParticle(this);
     }
   
@@ -10,4 +10,3 @@ class Particle extends VerletParticle2D {
       circle(this.x, this.y, this.r * 2);
     }
   }
-  

@@ -5,11 +5,11 @@
 
 class Sun {
   constructor(_x, _y) {
-    this.x = _x;
-    this.y = _y;
+    this.x = 0;
+    this.y = 0;
     this.cirPath = [];
-    this.spacing = 60;
-    this.r1 = 50;
+    this.spacing = 36;
+    this.r1 = 70;
     this.r2 = 50;
   }
 
@@ -18,18 +18,24 @@ class Sun {
   }
 
   sunCurve() {
-    
+    angleMode(DEGREES);
     let cv;
-    for (let a = 0; a < 360; a += this.spacing) {
-      if (a % 2 == 0) {
-        cv = this.polarToCartesian(this.r1, a);
-      } else {
-        cv = this.polarToCartesian(this.r2, a);
-      }
-      //this.cirPath.push(cv);
-      this.cirPath.push(new Particle(cv.x, cv.y));
-      console.log(this.cirPath);
-    }
+    // for (let a = 0; a < 360; a += this.spacing) {
+    //   if (a % 2 == 0) {
+    //     cv = this.polarToCartesian(this.r1, a);
+    //   } else {
+    //     cv = this.polarToCartesian(this.r2, a);
+    //   }
+    //   //this.cirPath.push(cv);
+    //   this.cirPath.push(new Particle(cv.x, cv.y));
+    // }
+    this.cirPath.push(new Particle(200, 100));
+    this.cirPath.push(new Particle(400, 100));
+    this.cirPath.push(new Particle(350, 200));
+    this.cirPath.push(new Particle(400, 300));
+    this.cirPath.push(new Particle(200, 300));
+    this.cirPath.push(new Particle(250, 200));
+    console.log(this.cirPath.length);
     // Connect all the nodes with a Spring
     for (let i = 0; i < this.cirPath.length - 1; i++) {
       let particle_i = this.cirPath[i];
@@ -70,18 +76,18 @@ class Sun {
   }}
 
   show() {
-    fill(238, 232, 44, 125);
-    stroke(238, 232, 44);
-    console.log(cirPath.length);
-    push();
-    translate(width / 2, height / 2);
+    stroke(0);
+    
+    // beginShape();
+    // for (let i = 0; i < this.cirPath.length; i++) {
+    //   let v = this.cirPath[i];
+    //   circle(v.x, v.y, 10);
+    // }
+    // endShape(CLOSE);
     beginShape();
-    for (let i = 0; i < this.cirPath.length; i++) {
-      let v = this.cirPath[i];
-      //vertex(v.x, v.y);
-      circle(v.x, v.y, 2);
-    }
+    for (let particle of this.cirPath) {
+      vertex(particle.x, particle.y);
+    }  
     endShape(CLOSE);
-    pop();
   }
 }
