@@ -8,27 +8,31 @@
 class Tail {
   constructor(_id, _initLocation) {
     this.id = _id;
-    this.initLocation = createVector(0, 0);
+    this.initLocation = _initLocation;
     this.NUM_PARTICLES = 50;
 
     // Create different size tails
-    this.restLength = random(10, 20);
+    this.restLength = random(5, 10);
 
-    this.head;
-
+    this.head = null;
     this.nodes = [];
     this.sticks = [];
-
+   
     this.prevParticle = null;
 
+    
+  }
+
+  makeTail() {
     for (let i = 0; i < this.NUM_PARTICLES; i++) {
       // create particles
       let location = createVector(this.initLocation.x, this.initLocation.y);
-      let particle = new Particle(location, random(0.2, 0.6));
+      let particle = new Particle(location.x, location.y);
+      //let particle = new Particle(location, random(0.2, 0.6));
 
       this.nodes[i] = particle;
       if (this.prevParticle != null) {
-        let spring = new Spring(this.prevParticle, particle, 0.5);
+        let spring = new Spring(this.prevParticle, particle, 0.1);
         
         this.sticks[i - 1] = spring;
       }
@@ -36,30 +40,32 @@ class Tail {
     }
 
     // get the top particle for evey indepentent tail
-    //head = particles[0](this.id * this.NUM_PARTICLES);
     this.head = this.nodes[0];
     this.head.lock();
   }
 
-
   show() {
     // draw springs
-
+    strokeWeight(2);
     let scRatio = this.sticks.length * 0.75;
 
     beginShape(LINES);
     for (let i = 0; i < this.sticks.length; i++) {
       if (i < scRatio) {
-        let sc = int((127 / scRatio) * i);
+        let sc = int((255 / scRatio) * i);
         stroke(255, sc);
       }
-      //stroke(255);
 
       let s = this.sticks[i];
-      vertex(s.a.x, s.a.y, s.a.z);
-      vertex(s.b.x, s.b.y, s.b.z);
+      vertex(s.a.x, s.a.y);
+      vertex(s.b.x, s.b.y);
     }
     endShape();
-  }
 
+    push();
+    stroke(255,0,0)
+    circle(this.nodes[3].x, this.nodes[3].y, 10);
+    pop();
+  }
+  
 }

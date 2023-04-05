@@ -20,7 +20,7 @@ class Agent {
     this.steps = _steps;
 
     this.isVertexNormalActive = false;
-    this.drawAxis = false;
+    
   }
 
   update() {
@@ -51,8 +51,8 @@ class Agent {
         let cp2 = 1.0 + cos(this.fpsSpeed) * 0.2;
 
         // UV texture map coordinates
-        let u = i / this.segments;
-        let bu = (i + 1) / this.segments;
+        // let u = i / this.segments;
+        // let bu = (i + 1) / this.segments;
 
 
         this.x = cos(a) * this.radius;
@@ -62,7 +62,8 @@ class Agent {
         let vy = bezierPoint(0.0, this.y * cp1, this.y * cp2, this.y, t);
         let v = createVector(vx, vy);
         if (this.isVertexNormalActive)  {norm(v);}
-        vertex(v.x, v.y, u, t);
+        //vertex(v.x, v.y, u, t);
+        vertex(v.x, v.y);
 
         this.x = cos(a + theta) * this.radius;
         this.y = sin(a + theta) * this.radius;
@@ -70,21 +71,12 @@ class Agent {
         vy = bezierPoint(0.0, this.y * cp1, this.y * cp2, this.y, t);
         v = createVector(vx, vy);
         if (this.isVertexNormalActive) norm(v);
-        vertex(v.x, v.y, bu, t);
+       // vertex(v.x, v.y, bu, t);
+        vertex(v.x, v.y);
       }
       endShape();
     }
 
-    // Draws XYZ axis for reference only
-    if (this.drawAxis) {
-      let axisRadius = 60.0;
-      stroke(255, 0, 0);
-      line(0.0, 0.0, axisRadius, 0.0);
-      stroke(0, 255, 0);
-      line(0.0, 0.0, 0.0, axisRadius);
-      stroke(0, 0, 255);
-      line(0.0, 0.0, 0.0, 0.0, 0.0, axisRadius);
-    }
   }
 
 }

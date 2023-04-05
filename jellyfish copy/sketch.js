@@ -38,7 +38,7 @@ function setup() {
   jellyfish.connectPoints();
   t1 = jellyfish.addTenticles();
   jellyfish.connectTenticlePoints()
-  jellyfish.connect();
+  //jellyfish.connect();
 }
 
 function draw() {
@@ -51,7 +51,7 @@ function draw() {
   stroke(237, 230, 13);
 
   jellyfish.show();
-
+  jellyfish.lockTenticle();
 
   if (mouseIsPressed) {
     particles[0].lock();
@@ -59,6 +59,6 @@ function draw() {
     particles[0].x = mouseX;
     particles[0].y = mouseY;
     particles[0].unlock();
-    t1[0].unlock();
+   // t1[0].lock();
   }
 }

@@ -20,20 +20,26 @@ class Boid {
         this.wandertheta = 0;
 
         // setup agent and tails
-        // agent(radius, height, horizontal resolution, vertical resolution)
-        this.agent = new Agent(100.0, 60.0, 18, 8);
-        this.NUM_TAILS = this.agent.segments;
+        // constructor(_radius, _height, _numSegments, _steps) 
+
+        this.agent = new Agent(50.0, 60.0, 36, 8);
+        this.NUM_TAILS = 20;
+        //this.NUM_TAILS = this.agent.segments;
         this.tails = [];
         this.boids = [];
+       // this.springs = [];
+        this.heads = [];
 
         for (let i = 0; i < this.NUM_TAILS; i++) {
             this.tails[i] = new Tail(i + (this.id * this.NUM_TAILS), this.location);
+            let head = this.tails[i].makeTail();
+            this.heads[i] = head;
         }
     }
 
     // Steer
     steer(target, slowdown) {
-        let steer = createVector(0,0,0);
+        let steer = createVector(0, 0, 0);
         let desired = createVector(target.sub(this.location));
         let d = desired.mag();
 
@@ -108,7 +114,7 @@ class Boid {
                 count++; // Keep track of how many
             }
         }
-      
+
         // Average -- divide by how many
         if (count > 0) steer.mult(1.0 / count);
 
@@ -143,8 +149,8 @@ class Boid {
         // As long as the vector is greater than 0
         if (steer.mag() > 0.0) {
             // Implement Reynolds: Steering = Desired - Velocity
-            steer.norm();
-            steer.scale(this.maxSpeed);
+            norm(steer);
+            steer.mult(this.maxSpeed);
             steer.sub(this.velocity);
             steer.limit(this.maxForce);
         }
@@ -232,6 +238,9 @@ class Boid {
     }
 
 
+    connect() {
+        springs.push(new springs())
+    }
     update() {
         this.velocity.add(this.acceleration);
         this.velocity.limit(this.maxSpeed);
@@ -244,22 +253,22 @@ class Boid {
 
     show() {
         stroke(255);
-
+        strokeWeight(4);
         // Rotation vectors
         // use to perform orientation to velocity vector
-        let new_dir = createVector(this.velocity);
-        norm(new_dir);
+        // let new_dir = createVector(this.velocity);
+        // norm(new_dir);
 
-        let new_up = createVector(0.0, -1.0);
-        norm(new_dir);
+        // let new_up = createVector(0.0, -1.0);
+        // norm(new_dir);
 
-        let new_side = new_dir.cross(new_up);
-        norm(new_side);
+        // let new_side = new_dir.cross(new_up);
+        // norm(new_side);
 
-        let dotP = new_dir.dot(new_up);
+        // let dotP = new_dir.dot(new_up);
 
-        //https://p5js.org/reference/#/p5.Vector/angleBetween
-        let angle = new_dir.angleBetween(new_up);
+        // //https://p5js.org/reference/#/p5.Vector/angleBetween
+        // let angle = new_dir.angleBetween(new_up);
 
         push();
         // update location
@@ -268,7 +277,7 @@ class Boid {
         //rotate(-angle, new_side.x, new_side.y);
         //rotate(angle);
         this.agent.show();
-        pop();
+
 
         // attach head particle to agent base
         let theta = TWO_PI / this.NUM_TAILS;
@@ -281,9 +290,10 @@ class Boid {
             // base of the umbrella aperture
             let c = createVector(x, y);
             //c.rotate(90);
-            this.tails[i].head.set(this.location.x + c.x, this.location.y + c.y);
-            this.tails[i].head.rotate(-90)
+        
             this.tails[i].show();
+
         }
+        pop();
     }
 }

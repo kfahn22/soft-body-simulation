@@ -31,7 +31,7 @@ let particles = [];
 let springs = [];
 
 
-let NUM_BOIDS = 1;
+let NUM_BOIDS = 4;
 let boids = [];
 // PImage skin, reef;
 
@@ -45,7 +45,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(640, 780);
+  createCanvas(800, 780);
 
   //frameRate(30.0);
 
@@ -61,7 +61,7 @@ function setup() {
 
   // create jellies
   for (let i = 0; i < NUM_BOIDS; i++) {
-    let location = createVector(width * 0.5, height * 0.65);
+    let location = createVector(random(width), random(height));
     let maxSpeed = random(0.5, 1.5);
     let maxForce = random(0.1, 0.3);
 
